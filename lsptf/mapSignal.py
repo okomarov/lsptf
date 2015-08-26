@@ -1,16 +1,31 @@
 import numpy as np
 
-def _mapCore(data,**kwargs):
+def binData(*args, IndipendentSort=True, NumBins=10, Percentiles=None, Edges=None):
     
-    # Use supplied edges
-    if kwargs.get('HasEdges',False):
-        edges = kwargs.get('Edges')
-    
-    # Partition in percentiles
+    if Edges is not None:
+        opts = {'edges':Edges}
+    elif Percentiles is not None:
+        opts = {'ptiles':Percentiles}
     else:
-        nbins  = kwargs.get('NumBins')
-        ptiles = np.linspace(0,100,nbins)
-        
+        opts = {'ptiles':np.linspace(0,100, NumBins+1)}
+    
+    
+    if IndipendentSort:
+        bins = _binIndipendently(*args, **opts)
+    else:
+        bins = _binConditionally(*args, **opts)
+
+    return bins
+
+def _binIndipendently(*data, **opts):
+    return [_binCore(x, **opts) for x in data]
+
+def _binConditionally(*data, **opts):
+    pass
+
+def _binCore(data, ptiles=None, edges=None):
+    
+    if edges is None:
         # Ensure monotonically increasing percentiles, i.e. convert data to 
         # integer ranks. Applied by rows
         nanmask       = np.isnan(data)
