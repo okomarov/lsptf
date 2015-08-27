@@ -39,5 +39,8 @@ def _binCore(data, ptiles=None, edges=None, nbins=None):
             edge = edges[r, :]
 
         bins[r, notnan] = np.digitize(data[r, notnan], edge)
-    
+
+    # Make sure last bin is lb <= x <= ub
+    bins[bins == nbins+1] = nbins
+
     return bins
