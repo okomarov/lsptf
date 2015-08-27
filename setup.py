@@ -12,7 +12,7 @@ with open(path.join(here, 'DESCRIPTION.rst'), encoding='utf-8') as f:
 
 setup(
     name = 'lsptf',
-    versions = '0.1.0-alpha',
+    version = '0.1.0-alpha',
     description = 'Long short investment portfolios',
     long_description = long_description,
     url='https://github.com/okomarov/lsptf',
@@ -29,10 +29,10 @@ setup(
         'Development Status :: 3 - Alpha',
 
         # Indicate who your project is intended for
-        'Intended Audience :: Financial and Insurance Industry'
-        'Intended Audience :: Science/Research'
-        'Intended Audience :: Education'
-        'Intended Audience :: End Users/Desktop'
+        'Intended Audience :: Financial and Insurance Industry',
+        'Intended Audience :: Science/Research',
+        'Intended Audience :: Education',
+        'Intended Audience :: End Users/Desktop',
 
         'Topic :: Office/Business :: Financial :: Investment',
 
@@ -56,7 +56,7 @@ setup(
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
     #packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
-    packages=numpy, 
+    packages=find_packages(exclude=['contrib', 'docs', 'tests*']), 
 
     # List run-time dependencies here.  These will be installed by pip when
     # your project is installed. For an analysis of "install_requires" vs pip's
