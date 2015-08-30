@@ -1,6 +1,41 @@
 import numpy as np
 
 def binData(*data, IndependentSort=True, NumBins=10, Percentiles=None, Edges=None):
+    """Returns indices of the percentile or custom bins to which each value in input array belongs.
+    
+    Two-dimensional data are sorted by rows either independently, i.e. one by one,
+    or conditioning on the bin from the previous sort. In the latter case, order 
+    of the `*data` matters, i.e. `data1` is first mapped into bins, then values 
+    of `data2` corresponding to `bin=1` (from the `data1`) are mapped into bins,
+    etc... 
+    Bins are delimited with left inclusion, i.e. lb <= x < ub, except for the 
+    last one which also includes the right edge.     
+    The lower and upper boundaries of the bins are row-wise percentiles.
+
+    Args:
+        data1,...,dataN (numpy.ndarray): array-like datasets to sort by rows. 
+            Must have same shape.
+             
+        IndependentSort (Optional[bool]): alternative is conditional sort. 
+            Defaults to True.
+               
+        NumBins (Optional[int]): number of equal percentiles data is mapped into. 
+            Defaults to 10. 
+            
+        Percentiles (Optional[float]): array of values between [0,100]. It has 
+            to be 1-dimensional and monotonic. If supplied, `NumBins` is ignored.  
+            Defaults `linspace(0,100, NumBins+1)`.
+        
+        Edges (Optional[float]): array with absolute bin values. It has to be 
+            monotonic. If supplied both `NumBins` and `Percentiles` are ignored. 
+            
+    Returns:
+        out (numpy.ndarray): k by data.shape array of indices where the k-th 
+            layer correponds to the k-th `*data`. 
+  
+    See also: numpy.digitize, numpy.percentile, numpy.linspace
+    """
+
 
     # Extract edges info
     if Edges is not None:
@@ -49,6 +84,7 @@ def _binConditionally(binmask,*data, **opts):
             bins[1, binmask] = _binConditionally(binmask,*data[1:], **opts)[binmask]
 
     return bins
+
 
 def _binCore(data, ptiles=None, edges=None, nbins=None):
 
