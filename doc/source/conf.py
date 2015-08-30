@@ -25,7 +25,7 @@ import shlex
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
-#needs_sphinx = '1.0'
+needs_sphinx = '1.3'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
@@ -46,7 +46,7 @@ intersphinx_mapping = {'python': ('https://docs.python.org/3', None)}
 
 # Napoleon settings
 napoleon_google_docstring = True
-napoleon_numpy_docstring = True
+napoleon_numpy_docstring = False
 napoleon_include_private_with_doc = False
 napoleon_include_special_with_doc = True
 napoleon_use_admonition_for_examples = False
